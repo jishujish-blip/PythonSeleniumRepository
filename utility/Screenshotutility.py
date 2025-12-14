@@ -10,8 +10,15 @@ def capture_screenshot(item, file_path):#capture_screenshot take a screenshot us
     This checks whether the current test used the fixture named "browserinstance".
     If so, it extracts that fixture—this is expected to be your Selenium WebDriver'''
 
-    if hasattr(item, 'funcargs') and 'browserinstance' in item.funcargs:
-        driver = item.funcargs['browserinstance']
+
+    if hasattr(item, "funcargs"):
+
+        if "browser_instance" in item.funcargs:
+            driver = item.funcargs["browser_instance"]
+
+
+        elif "cross_browser" in item.funcargs:
+            driver = item.funcargs["cross_browser"]
     '''
     if driver is found, Ensures the folder exists before saving the screenshot (os.makedirs(..., exist_ok=True) prevents errors if the folder already exists).
     Calls Selenium’s save_screenshot() to write the PNG file.

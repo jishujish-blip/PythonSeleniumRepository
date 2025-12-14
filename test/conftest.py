@@ -55,3 +55,15 @@ def pytest_runtest_makereport(item):
                 extra.append(pytest_html.extras.html(html))
         #Writes extras (screenshots) into the final report output.
         report.extras = extra
+
+@pytest.fixture(params=["chrome", "firefox", "edge"])
+def cross_browser(request):
+    if request.param == "chrome":
+        driver = webdriver.Chrome()
+    elif request.param == "firefox":
+        driver = webdriver.Firefox()
+    elif request.param == "edge":
+        driver = webdriver.Edge()
+
+    driver.maximize_window()
+    yield driver
